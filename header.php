@@ -1,73 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>1760016_BTCN09</title>
-  </head>
-  <body>
-
-  <div class="container">
-    <h1>Lập Trình Web 1</h1>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php">Lập Trình Web 1</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item <?php echo $page == 'index' ? 'active': ''; ?>">
-        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <?php if (!$currentUser): ?>
-      <li class="nav-item <?php echo $page == 'register' ? 'active': ''; ?>">
-        <a class="nav-link" href="register.php">Đăng Ký <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item <?php echo $page == 'login' ? 'active': ''; ?>">
-        <a class="nav-link" href="login.php">Đăng Nhập <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item <?php echo $page == 'forgot_password' ? 'active' : '' ?>">
-              <a class="nav-link" href="forgot_password.php">Quên mật khẩu</a>
-      </li>
-      <?php else: ?>
-      <li class="nav-item <?php echo $page == 'Update-Profile' ? 'active': ''; ?>">
-        <a class="nav-link" href="Update-Profile.php">Cá nhân<span class="sr-only">(current)</span></a>
-      </li>
-      </li><li class="nav-item <?php echo $page == 'change-password' ? 'active': ''; ?>">
-        <a class="nav-link" href="change-password.php">Đổi mật khẩu<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item <?php echo $page == 'logout' ? 'active': ''; ?>">
-        <a class="nav-link" href="logout.php">Đăng Xuất <?php echo $currentUser ? ' ('. $currentUser['displayName'].')' :'' ?>  <span class="sr-only">(current)</span></a>
-      </li>
-     
-      <?php endif; ?>
-    <!-- //   <li class="nav-item">
-    //     <a class="nav-link" href="#">Link</a>
-    //   </li>
-    //   <li class="nav-item dropdown">
-    //     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    //       Dropdown
-    //     </a>
-    //     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    //       <a class="dropdown-item" href="#">Action</a>
-    //       <a class="dropdown-item" href="#">Another action</a>
-    //       <div class="dropdown-divider"></div>
-    //       <a class="dropdown-item" href="#">Something else here</a>
-    //     </div>
-    //   </li>
-    //   <li class="nav-item">
-    //     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-    //   </li>
-    // </ul>
-    // <form class="form-inline my-2 my-lg-0">
-    //   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    //   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    // </form> -->
+<head>
+  <title>Chào mừng các bạn đến với mạng xã hội</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.php">Trang chủ</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+    <?php if(!$currentUser) : ?>
+      <li class="nav-item <?php echo $page == 'login' ? 'active' :'' ?>" >
+        <a class="nav-link" href="login.php">Đăng Nhập</a>
+    </li>
+    <li class="nav-item"  <?php echo $page == 'register' ? 'active' :'' ?> >
+        <a class="nav-link" href="register.php">Đăng Ký </a>
+     </li>
+     <?php endif; ?>
+     </ul>
+    <?php if ($currentUser) : ?>
+      <form class="navbar-form navbar-left" action="/action_page.php">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search">
+    <div class="input-group-btn">
+      <button class="btn btn-default" type="submit">
+        <i class="glyphicon glyphicon-search"></i>
+      </button>
+    </div>
   </div>
-</nav>
+</form>
+     <ul class="nav navbar-nav">
+     <li class="active"><a href="post.php">Cập nhập trạng thái</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar">
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <li><i class="fas fa-user-friends" style="font-size:24px; color: white; margin: 2px; padding: 10px"></i></li>
+    <li> <i class="fa fa-comment" style="font-size:24px; color: white; margin: 2px; padding: 10px"></i></li>
+    <li> <i class="fa fa-bell" style="font-size:24px;color:White; margin: 2px; padding: 10px"></i></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $currentUser['displayName'] ?><span class="caret"></span>
+      </a>
+        <ul class="dropdown-menu">
+          <li><a href="profile.php">Đổi thông tin cá nhân</a></li>
+          <li><a href="change-password.php">Đổi mật khẩu</a></li>
+          <li><a href="logout.php">Đăng Xuất</a></li>
+        </ul>
+      </li>
+    </ul>
+    <?php endif; ?>
+  </div>
+</nav>  

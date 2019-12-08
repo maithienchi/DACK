@@ -1,6 +1,7 @@
 ##### Windows
 # Windows thumbnail cache files
 Thumbs.db
+Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
 
@@ -66,6 +67,13 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+##### Backup
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
 ##### GPG
 secring.*
 
@@ -74,6 +82,44 @@ secring.*
 .dropbox
 .dropbox.attr
 .dropbox.cache
+
+##### SynopsysVCS
+# Waveform formats
+*.vcd
+*.vpd
+*.evcd
+*.fsdb
+
+# Default name of the simulation executable.  A different name can be
+# specified with this switch (the associated daidir database name is
+# also taken from here):  -o <path>/<filename>
+simv
+
+# Generated for Verilog and VHDL top configs
+simv.daidir/
+simv.db.dir/
+
+# Infrastructure necessary to co-simulate SystemC models with
+# Verilog/VHDL models.  An alternate directory may be specified with this
+# switch:  -Mdir=<directory_path>
+csrc/
+
+# Log file - the following switch allows to specify the file that will be
+# used to write all messages from simulation:  -l <filename>
+*.log
+
+# Coverage results (generated with urg) and database location.  The
+# following switch can also be used:  urg -dir <coverage_directory>.vdb
+simv.vdb/
+urgReport/
+
+# DVE and UCLI related files.
+DVEfiles/
+ucli.key
+
+# When the design is elaborated for DirectC, the following file is created
+# with declarations for C/C++ functions.
+vc_hdrs.h
 
 ##### SVN
 .svn/
@@ -100,9 +146,14 @@ secring.*
 # Project-level settings
 /.tgitconfig
 
+##### PuTTY
+# Private key
+*.ppk
+
 ##### Vim
 # Swap
 [._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
 [._]*.sw[a-p]
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
@@ -110,6 +161,7 @@ secring.*
 
 # Session
 Session.vim
+Sessionx.vim
 
 # Temporary
 .netrwhist
@@ -216,6 +268,7 @@ tmtags
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 
 ##### NetBeans
 **/nbproject/private/
@@ -261,6 +314,8 @@ nbdist/
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
+# *.iml
+# *.ipr
 
 # CMake
 cmake-build-*/
@@ -346,6 +401,7 @@ local.properties
 
 # Annotation Processing
 .apt_generated/
+.apt_generated_test/
 
 # Scala IDE specific (Scala & Java development for Eclipse)
 .cache-main
@@ -383,18 +439,6 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-##### Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
 ##### Composer
 composer.phar
 /vendor/
@@ -410,6 +454,11 @@ composer.lock
 # Recommended template: PHP.gitignore
 
 /wpcs/*
-
 /config.php
-/coverage
+/Coverage
+
+##### SASS
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
