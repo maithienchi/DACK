@@ -1,0 +1,57 @@
+  private void btnLogin_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            string query = "insert into NGUOIDUNG (id, pw, email, hoten, gioitinh, phanquyen) " +
+                "values (@id, @pw, @email, @hoten, @gioitinh, @phanquyen)";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.Add("@hoten", SqlDbType.NVarChar).Value = txtHoten.Text;
+            cmd.Parameters.Add("@email", SqlDbType.VarChar).Value = txtEmail.Text;
+            cmd.Parameters.Add("@gioitinh", SqlDbType.NVarChar).Value = cbGioitinh.SelectedItem.ToString();
+            cmd.Parameters.Add("@phanquyen", SqlDbType.NVarChar).Value = cbPhanquyen.SelectedItem.ToString();
+            cmd.Parameters.Add("@id", SqlDbType.VarChar).Value = txtUsername.Text;
+            cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = txtPassword.Text;
+
+
+            //string query = "insert into NGUOIDUNG (id,pw,email,hoten,gioitinh,phanquyen) values ('" + this.txtUsername.Text + "'" +
+            //       ",'" + this.txtPassword.Text + "','" + this.txtEmail.Text + "','" + this.txtHoten.Text + "','" + this.cbGioitinh.SelectedItem.ToString() + "','" + this.cbPhanquyen.SelectedItem.ToString() + "')";
+                //SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
+                //Ki?m tra nh?p li?u
+                if (!checkTextbox())
+                {
+                    //Ki?m tra nh?p l?i password có chính xác không
+                    if(txtPassword.Text.Equals(txtConfirmpass.Text))
+                    {
+                        //Ki?m tra username có trùng không
+                        if (checkUsername() == true)
+                        {
+                            MessageBox.Show("Username dã t?n t?i!");
+                        }
+                        else
+                        {
+                            if (cmd.ExecuteNonQuery() == 1)
+                            {
+                                MessageBox.Show("Ðang ký thành công!");
+                                this.Hide();
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ðang ký th?t b?i!");
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("M?t Kh?u Không Trùng!");
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng nh?p thông tin!");
+                }
+            con.Close();
+           
+        }
