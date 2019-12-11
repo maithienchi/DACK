@@ -26,7 +26,11 @@ if (isset($_POST['displayName'])) {
       $filePath = './avatars/' . $currentUser['id'] . '.jpg';
        move_uploaded_file($fileTemp, $filePath);
       $newImage = resizeImage($filePath, 480, 480);
-      imagejpeg($newImage, $filePath);
+      // imagejpeg($newImage, $filePath);
+      ob_start();
+      imagejpeg($image);
+      $jpeg_file_contents = 
+
       $currentUser['hasAvatar'] = 1;
       updateUserProfile($currentUser);
       header('Location: index.php');
