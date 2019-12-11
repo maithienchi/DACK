@@ -1,70 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-  <!--image-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <title>Team 3XXX</title>
-</head>
-<body>
-<style>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-  top:50;
-  left: 50%;
-  transform: translate(80%, 20%);
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
-}
-</style>
 <?php 
   require_once 'init.php';
-  //require_once 'functions.php';
+
   // Xử lý logic ở đây
-  //$page='index';
-  if ($currentUser) {
-    $newFeeds = getNewFeeds();
- }
+  $posts=getNewFeeds();
+
+  // setcookie('PHPSESSID',$cookie_name['PHPSESSID'], time() + (0), "/");
+  //var_dump($_COOKIE);
+  //echo $currentUser['id'];
+  // var_dump($GLOBALS);
 ?>
 <?php include 'header.php'; ?>
-<h1>Chào bạn đến với mạng xã hội</h1>
 
-<?php if ($currentUser) : ?>
-<p>Chào mừng <?php echo $currentUser['displayName'] ?> đã trở lại.</p>
-<?php foreach ($newFeeds as $post) : ?>
-<div class="card" style="margin-bottom:10px;">
+<?php if ($currentUser): ?>
+<p>Chào mừng <?php echo $currentUser['displayName']; ?> đã trở lại </p>
+<form action="create-post.php" method = "POST" >
+    <div class = "form-group">
+   <label for="content">Tạo bài viết</label>
+   <textarea class="form-control" name='content' id="content" rows="3" placeholder="<?php echo $currentUser['displayName']; ?> ơi, bạn đang nghĩ gì?"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Đăng</button>
+    </form>
+
+<?php foreach ($posts as $posts) : ?>
+<div class="card" style="margin-bottom: 10px;">
   <div class="card-body">
     <h4 class="card-title">
-    <div class="container">        
-    <img src="uploads/avatars/<?php echo $post['userId'] ?>.jpg" class="img-circle" alt="Cinque Terre" width="40" height="40"><?php echo $post['userdisplayName'] ?> 
-    <p><?php echo $post['content'] ?></p>
       <div class="row">
-        <div class="col">
-          <?php if ($post['userHasAvatar']) : ?>
-          <img class="avatar" src="uploads/avatars/<?php echo $post['userId'] ?>.jpg">
+        <div class="col-sm-0">
+          <?php if ($posts['hasAvatar']) : ?>
+          <img src="./avatars/<?php echo $posts['userId'] ?>.jpg" class="img-circle" alt="Cinque Terre" width="35" height="35">
+          <!-- <img style="width: 150px;"src="./avatars/<?php echo $posts['userId'] ?>.jpg"> -->
           <?php else : ?>
-          <img src="no-avatar.jpg">
+          <img src="no-avatar.jpg" class="img-circle" alt="Cinque Terre" width="35" height="35">
+          <!-- <img style="width: 150px;"src="no-avatar.jpg"> -->
           <?php endif; ?>
-          </div>
+        </div>
+        <div class="col-sm">
+          <?php echo $posts['displayName'] ?>
         </div>
       </div>
     </h4>
     <p class="card-text">
-    <small>Đăng lúc: <?php echo $post['createdAt'] ?></small>
+    <small>Đăng lúc: <?php echo $posts['createdAt'] ?></small>
+    <p style ='font-size:18px'><?php echo $posts['content'] ?></p>
     </p>
     <i class ='fa fa-thumbs-o-up' data-toggle="tooltip" title="Cảm xúc với status này!" style ='font-size:20px; color:black;'>&ensp;Thích</i>&emsp;
     <i class ='far fa-comment-alt' data-toggle="tooltip" title="Viết bình luận" style ='font-size:20px; color:black;'>&ensp;Bình luận</i>&emsp;
@@ -73,8 +51,6 @@
 </div>
 <?php endforeach; ?>
 <?php else: ?>
-
+<h1>Chào mừng đến với trang mạng xã hội FaBo</h1>
 <?php endif ?>
 <?php include 'footer.php'; ?>
-</body>
-</html>
