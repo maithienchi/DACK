@@ -1,7 +1,15 @@
 <?php
+  require_once 'init.php';
+
   if (isset($_POST['search']) && $_POST['search']!="")
   {
     header('Location: search.php?id='.$_POST['search']);
+  }
+
+  if(isset($_POST['notification']))
+  {
+    updateNotification($currentUser['id']);
+    header('Location: index.php');
   }
 ?>
 <!doctype html>
@@ -12,6 +20,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <!-- <link href="assets/css/bootstrap.css" rel="stylesheet">
+        
+    <link href="assets/css/facebook.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -20,7 +33,18 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <title>FaBo</title>
+
+    <!-- jquery ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
     <style>
     /* body {
     background-image: url('backgroud2.jpg');
@@ -28,36 +52,14 @@
     background-attachment: fixed;
     background-size: 100% 100%;
     } */
-    .img-circle
-    {
-    border-radius: 50%;
-    color: black;
-    background-color: #e9ecef;
-    text-shadow: 0 0 black;
-    }
-    .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0);
-  transition: 0.3s;
-  width: 100%;
-  top: 0%;
-  left: 0%;
-  transform: translate(0%, 20%);
-  }
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-  padding: 2px 16px;
-}
+ 
     </style>
   </head>
   <body>
   
   <div class="container">
     <h1>Mạng xã hội FaBo</h1>
-    <nav class="navbar navbar-expand-lg navbar-primary bg-dark ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
   <a class="navbar-brand" href="index.php"><strong>FaBo</strong></a>
   <!-- <a class="nav-item ml-sm-3 ">
   <ion-icon ios="ios-contacts" md="md-contacts" size="large" title="Danh sách bạn bè" ></ion-icon>
@@ -102,12 +104,14 @@
           <a class="dropdown-item" href="YeuCauDaGui.php">Yêu cầu kết bạn đã gửi</a>
         </div>
       </li>
-      <li class="nav-item <?php echo $page == 'Update-Profile' ? 'active': ''; ?>">
+      <li class="nav-item <?php echo $page == 'message' ? 'active': ''; ?>">
         <a class="nav-link" href="message.php">Tin Nhắn<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item <?php echo $page == 'Update-Profile' ? 'active': ''; ?>">
-        <a class="nav-link" href="Update-Profile.php">Thông Báo<span class="sr-only">(current)</span></a>
+      <li class="nav-item <?php echo $page == 'notification' ? 'active': ''; ?>">
+        <a class="nav-link" href="notification.php" >Thông Báo <span class="sr-only">(current)</span></a>
       </li>
+      <li><div class="notification"><?php echo $currentUser['dem'];?></div></li>&ensp;
+      
       <!-- </li><li class="nav-item <?php echo $page == 'change-password' ? 'active': ''; ?>">
         <a class="nav-link" href="change-password.php">Đổi mật khẩu<span class="sr-only">(current)</span></a>
       </li> -->
